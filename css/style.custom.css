@@ -1,0 +1,8 @@
+#container {
+    overflow: hidden;
+}
+
+
+.space-top {
+    min-height: 15vh;
+}
