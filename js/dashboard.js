@@ -14,7 +14,6 @@ function getData(key) {
     chrome.storage.local.get([key], function (result) {
         let value = result.key;
         console.log(value);
-        alert(value);
     });
 }
 
@@ -26,4 +25,11 @@ $("#button").click(function () {
 
 $("#button-2").click(function () {
     getData("key");
+});
+
+// document ready
+$(document).ready(function () {
+    let value = getData("key");
+    // Set value
+    $("#authorization").val(value);
 });
