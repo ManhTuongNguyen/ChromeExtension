@@ -12,11 +12,13 @@
   },
   "permissions": [
     "activeTab",
-    "storage"
+    "storage",
+    "*://*.pythonanywhere.com/*"
   ],
   "content_scripts": [
     {
       "js": [
+        "js/notification.js",
         "js/content.js"
       ],
       "matches": [
@@ -24,5 +26,9 @@
       ],
       "run_at": "document_start"
     }
-  ]
+  ],
+  "background": {
+    "scripts": ["js/bg_page.js"],
+    "persistent": false
+  }
 }
