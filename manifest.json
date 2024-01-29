@@ -1,6 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "My Extension",
+  "name": "English vocabulary",
+  "description": "With this extension, use can easily save word to create flashcard.",
   "version": "1.0",
   "browser_action": {
     "default_popup": "popup.html",
@@ -13,7 +14,8 @@
   "permissions": [
     "activeTab",
     "storage",
-    "*://*.pythonanywhere.com/*"
+    "http://*/*",
+    "https://*/*"
   ],
   "content_scripts": [
     {
@@ -22,7 +24,8 @@
         "js/content.js"
       ],
       "matches": [
-        "https://en.wikipedia.org/*"
+          "http://*/*",
+          "https://*/*"
       ],
       "run_at": "document_start"
     }

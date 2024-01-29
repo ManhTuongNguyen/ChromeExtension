@@ -19,24 +19,36 @@ function sendDataToServer(selectedText) {
         let status = response.status;
         let data = response.data;
         if (status === 201) {
-            showNotification("Đã thêm thành công!", "success", 600);
-            return;
+          showNotification("Đã thêm thành công!", "success", 600);
+          return;
         }
         if (status === 400) {
-            showNotification(data["word"][0], "error", 1500);
-            return;
+          showNotification(data["word"][0], "error", 1500);
+          return;
         }
         if (status === 401) {
-            showNotification("Hãy cấu hình API key!", "warning", 2000);
-            return;
+          showNotification("Hãy cấu hình API key!", "warning", 2000);
+          return;
         }
         if (status > 500) {
-            showNotification("Server đang bị lỗi!", "error", 1500);
-            return;
+          showNotification("Server đang bị lỗi!", "error", 1500);
+          return;
         }
       }
     );
   });
+}
+
+function getSelectedText() {
+  var selectedText = "";
+  if (window.getSelection) {
+    selectedText = window.getSelection();
+  } else if (document.getSelection) {
+    selectedText = document.getSelection();
+  } else if (document.selection) {
+    selectedText = document.selection.createRange().text;
+  } else return;
+  return selectedText;
 }
 
 document.addEventListener("DOMContentLoaded", function () {
