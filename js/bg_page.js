@@ -1,48 +1,36 @@
 chrome.runtime.onMessage.addListener(
-  async (request, sender, handleResponse) => {
+  (request, sender, sendResponse) => {
     let apiKey = request.apiKey;
     let selectedText = request.text;
     let url = "https://mtuongpk123.pythonanywhere.com/api/vocabulary/";
-    try {
-      fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
-          word: selectedText,
-        }),
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        word: selectedText,
+      }),
+    })
+      .then(async (response) => {
+        return {
+          status: response.status,
+          data: await response.json(),
+        }
       })
-        .then((response) => {
-          let status = response.status;
-          if (status >= 200 && status < 300) {
-            return response.json();
-          }
-          else {
-            handleResponse({
-              status: "error",
-              message: `Error: ${response}`,
-            })
-          }
-        })
-        .then((responseJson) => {
-          handleResponse({
-            status: "success",
-            message: responseJson,
-          });
-        })
-        .catch((error) => {
-          handleResponse({
-            status: "error",
-            message: `Error: ${error}`,
-          });
+      .then((result) => {
+        sendResponse({
+          status: result.status,
+          data: result.data,
         });
-    } catch (error) {
-      handleResponse({
-        status: "error",
-        message: `Error: ${error}`,
+      })
+      .catch((error) => {
+        sendResponse({
+          status: "500",
+          data: `Error: ${error}`,
+        });
       });
-    }
+    return true;
   }
 );

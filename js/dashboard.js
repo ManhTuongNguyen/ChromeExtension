@@ -13,23 +13,19 @@ function getData(key, callback) {
   });
 }
 
-$("#button").click(function () {
-  let value = $("#authorization").val();
+document.getElementById("button").addEventListener("click", function() {
+  let value = document.getElementById("authorization").value;
   setData(value);
 });
 
-$("#button-2").click(function () {
-  getData("key");
-});
-
 // document ready
-$(document).ready(function () {
-  getData("key", function (value) {
+document.addEventListener("DOMContentLoaded", function() {
+  getData("key", function(value) {
     if (!value) {
       showNotification("Hãy cấu hình API key!", "warning");
       return;
     }
     // Set value
-    $("#authorization").val(value);
+    document.getElementById("authorization").value = value;
   });
 });

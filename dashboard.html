@@ -7,29 +7,24 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.custom.css">
     <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/jquery.min.js"></script>
     <title>Dashboard</title>
 </head>
 
 <body>
     <div id="container">
-        <!--Write a simple dashboard-->
-        <div class="space-top"></div>
-        <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-8">
-
+        <div class="row space-top">
+            <div class="col-md-8 offset-md-2 col-12">
                 <form>
-                    <label for="authorization">API key</label>
+                    <label for="authorization" class="fw-bold">API key</label>
                     <input type="text" class="form-control" id="authorization" placeholder="Enter API key">
-                    <button type="button" class="btn btn-primary mt-3" id="button">Set data</button>
+                    <button type="button" class="btn btn-primary mt-3" id="button">Set API key</button>
                 </form>
-
             </div>
-            <div class="col-md-2"></div>
+
+
+            <a href="https://mtuongpk123.pythonanywhere.com/api/schema/swagger-ui/", target="_blank" class="fw-bold, fs-18">Dashboard quản lý</a>
         </div>
     </div>
-
 
     <script src="js/notification.js"></script>
     <script src="js/dashboard.js"></script>
