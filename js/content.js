@@ -40,15 +40,15 @@ function sendDataToServer(selectedText) {
 }
 
 function getSelectedText() {
-  var selectedText = "";
+  let _selectedText = "";
   if (window.getSelection) {
-    selectedText = window.getSelection();
+    _selectedText = window.getSelection().toString();
   } else if (document.getSelection) {
-    selectedText = document.getSelection();
+    _selectedText = document.getSelection().toString();
   } else if (document.selection) {
-    selectedText = document.selection.createRange().text;
+    _selectedText = document.selection.createRange().text;
   } else return;
-  return selectedText;
+  return _selectedText;
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let popup = document.createElement("div");
 
   popup.style.visibility = "hidden";
-  popup.style.fontSize = "14px";
+  popup.style.fontSize = "0.9rem";
   popup.style.position = "absolute";
   popup.style.backgroundColor = "rgb(170 205 147)";
   popup.style.margin = "0";
@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
   popup.style.display = "flex";
   popup.style.justifyContent = "center";
   popup.style.alignItems = "center";
-  popup.style.width = "75px";
+  popup.style.width = "5.5rem";
   popup.style.height = "25px";
   popup.style.border = "1px solid #99BC85";
   popup.style.color = "#344d4f";
@@ -81,21 +81,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.body.appendChild(popup);
 
-  // Listen for mouseup events
-  document.addEventListener(
-    "mouseup",
-    function (e) {
-      selectedText = window.getSelection().toString();
-      if (selectedText.length > 0) {
-        // Show the popup with the selected text
-        popup.style.left = e.pageX - 120 + "px";
-        popup.style.top = e.pageY + 15 + "px";
-        popup.style.visibility = "visible";
-      }
-    },
-    false
-  );
-
   // Hide the popup when we click on the screen.
   document.addEventListener(
     "mousedown",
@@ -104,4 +89,20 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     false
   );
+
+  document.addEventListener(
+    "contextmenu",
+    function (e) {
+      selectedText = getSelectedText();
+      if (selectedText.length > 0) {
+        // Show the popup with the selected text
+        popup.style.left = e.pageX - 120 + "px";
+        popup.style.top = e.pageY + 45 + "px";
+        popup.style.visibility = "visible";
+      }
+      else {
+        popup.style.visibility = "hidden";
+      }
+    }
+  )
 });
