@@ -96,8 +96,8 @@ document.addEventListener("DOMContentLoaded", function () {
       selectedText = getSelectedText();
       if (selectedText.length > 0) {
         // Show the popup with the selected text
-        popup.style.left = e.pageX - 120 + "px";
-        popup.style.top = e.pageY + 45 + "px";
+        popup.style.left = e.pageX - 60 + "px";
+        popup.style.top = e.pageY + 33 + "px";
         popup.style.visibility = "visible";
       }
       else {
