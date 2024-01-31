@@ -1,34 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.custom.css">
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <title>Dashboard</title>
 </head>
 
 <body>
-    <div id="container">
-        <div class="row space-top">
-            <div class="col-md-8 offset-md-2 col-12">
-                <a href="https://mtuongpk123.pythonanywhere.com/api/schema/swagger-ui/" , target="_blank"
-                    class="fw-bold fs-18 mt-3">Dashboard quản lý</a>
-
-                <form class="mt-3">
-                    <label for="authorization" class="fw-bold">API key</label>
-                    <input type="text" class="form-control" id="authorization" placeholder="Enter API key">
-                    <button type="button" class="btn btn-primary mt-3" id="button">Set API key</button>
-                </form>
+    <div class="container">
+        <h1 class="mt-4">Dashboard</h1>
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">API Documentation</h5>
+                <a href="https://mtuongpk123.pythonanywhere.com/api/schema/swagger-ui/" , target="_blank" ,
+                    class="btn btn-primary">Go to API Docs</a>
+            </div>
+        </div>
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">Set API Key</h5>
+                <input type="text" id="authorization" class="form-control" placeholder="Enter your API key here">
+                <button class="btn btn-primary mt-2" id="btn-save-key">Set API Key</button>
+            </div>
+        </div>
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">Saved word</h5>
+                <p id="info_text">You have not saved any word!</p>
+                <button class="btn btn-success mt-2" id="btn-download-word">Get saved word</button>
             </div>
         </div>
     </div>
 
+    <script src="js/bootstrap.bundle.min.js"></script>
+
     <script src="js/notification.js"></script>
     <script src="js/dashboard.js"></script>
-    <!-- <script src="tailwind.js"></script> -->
 </body>
 
 </html>

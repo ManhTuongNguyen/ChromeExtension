@@ -34,3 +34,10 @@ chrome.runtime.onMessage.addListener(
     return true;
   }
 );
+
+
+// Event click on extension icon
+chrome.browserAction.onClicked.addListener(function(tab) {
+  chrome.tabs.create({url: 'dashboard.html'});
+});
+
