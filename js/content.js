@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let popup = document.createElement("div");
 
   popup.style.visibility = "hidden";
-  popup.style.fontSize = "0.9rem";
+  popup.style.fontSize = "13px";
   popup.style.position = "absolute";
   popup.style.backgroundColor = "rgb(170 205 147)";
   popup.style.margin = "0";
@@ -73,11 +73,11 @@ document.addEventListener("DOMContentLoaded", function () {
   popup.style.cursor = "pointer";
   popup.style.verticalAlign = "middle";
   popup.style.borderRadius = "1rem";
-  popup.style.padding = ".1rem .5rem";
+  popup.style.padding = "1px 3px";
   popup.style.display = "flex";
   popup.style.justifyContent = "center";
   popup.style.alignItems = "center";
-  popup.style.width = "5.5rem";
+  popup.style.width = "75px";
   popup.style.height = "25px";
   popup.style.border = "1px solid #99BC85";
   popup.style.color = "#344d4f";
