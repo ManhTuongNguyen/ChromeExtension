@@ -51,6 +51,15 @@ function getSelectedText() {
   return _selectedText;
 }
 
+function isAndroidDevice() {
+  let userAgent = window.navigator.userAgent;
+  let _isAndroidDevice = false;
+  if (userAgent.includes("Android")) {
+    _isAndroidDevice = true;
+  }
+  return _isAndroidDevice;
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   // Create a div for the popup
   let popup = document.createElement("div");
@@ -90,19 +99,33 @@ document.addEventListener("DOMContentLoaded", function () {
     false
   );
 
-  document.addEventListener(
-    "contextmenu",
-    function (e) {
+  if (isAndroidDevice()) {
+    // Event for mobile browser
+    document.addEventListener("contextmenu", function (e) {
       selectedText = getSelectedText();
       if (selectedText.length > 0) {
         // Show the popup with the selected text
         popup.style.left = e.pageX - 60 + "px";
         popup.style.top = e.pageY + 33 + "px";
         popup.style.visibility = "visible";
-      }
-      else {
+      } else {
         popup.style.visibility = "hidden";
       }
-    }
-  )
+    });
+  } else {
+    // Event for desktop browser
+    document.addEventListener(
+      "mouseup",
+      function (e) {
+        selectedText = window.getSelection().toString();
+        if (selectedText.length > 0) {
+          // Show the popup with the selected text
+          popup.style.left = e.pageX - 120 + "px";
+          popup.style.top = e.pageY + 15 + "px";
+          popup.style.visibility = "visible";
+        }
+      },
+      false
+    );
+  }
 });

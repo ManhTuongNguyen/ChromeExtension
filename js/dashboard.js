@@ -60,10 +60,13 @@ document.addEventListener("DOMContentLoaded", function () {
 document
   .getElementById("btn-download-word")
   .addEventListener("click", function () {
-    // Assuming 'fileUrl' is the URL of the file you want to download
     let fileUrl =
       "https://mtuongpk123.pythonanywhere.com/api/vocabulary/download-workbook/";
     getData("key", (apiKey) => {
+      if (!apiKey) {
+        showNotification("Hãy cấu hình API key!", "warning");
+        return;
+      }
       fetch(fileUrl, {
         method: "GET",
         headers: {
@@ -71,11 +74,13 @@ document
         },
       })
         .then((response) => {
-          let contentDisposition = response.headers.get('Content-Disposition');
-          let filename = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)[1];
-          return response.blob().then(blob => ({blob, filename}));
+          let contentDisposition = response.headers.get("Content-Disposition");
+          let filename = contentDisposition.match(
+            /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/
+          )[1];
+          return response.blob().then((blob) => ({ blob, filename }));
         })
-        .then(({blob, filename}) => {
+        .then(({ blob, filename }) => {
           let url = window.URL.createObjectURL(blob);
           let a = document.createElement("a");
           a.href = url;
@@ -85,5 +90,34 @@ document
           a.remove();
         })
         .catch((e) => showNotification(e));
+    });
+  });
+
+document
+  .getElementById("btn-update-word")
+  .addEventListener("click", function () {
+    getData("key", (value) => {
+      if (!value) {
+        showNotification("Hãy cấu hình API key!", "warning");
+        return;
+      }
+      fetch("https://mtuongpk123.pythonanywhere.com/api/vocabulary/update-translation/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${value}`,
+        },
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            showNotification("Đã cập nhật thành công!", "success");
+          }
+          else {
+            showNotification("Có lỗi xảy ra!", "warning");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     });
   });
