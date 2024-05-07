@@ -1,4 +1,5 @@
 let selectedText = "";
+let duration = 3500;
 
 function sendDataToServer(selectedText) {
   chrome.storage.local.get(["key"], function (result) {
@@ -60,11 +61,21 @@ function isAndroidDevice() {
   return _isAndroidDevice;
 }
 
+function isValidWord(word) {
+  return (
+    word && !word.includes("\n") && word.length <= 17
+  );
+}
+
 document.addEventListener("DOMContentLoaded", function () {
+  let screenWidth = window.screenWidth;
+  let screenHeight = window.screenHeight;
+
   // Create a div for the popup
   let popup = document.createElement("div");
 
   popup.style.visibility = "hidden";
+  popup.style.zIndex = 999999;
   popup.style.fontSize = "13px";
   popup.style.position = "absolute";
   popup.style.backgroundColor = "rgb(170 205 147)";
@@ -72,12 +83,12 @@ document.addEventListener("DOMContentLoaded", function () {
   popup.style.fontWeight = "600";
   popup.style.cursor = "pointer";
   popup.style.verticalAlign = "middle";
-  popup.style.borderRadius = "1rem";
+  popup.style.borderRadius = "12px";
   popup.style.padding = "1px 3px";
   popup.style.display = "flex";
   popup.style.justifyContent = "center";
   popup.style.alignItems = "center";
-  popup.style.width = "75px";
+  popup.style.width = "83px";
   popup.style.height = "25px";
   popup.style.border = "1px solid #99BC85";
   popup.style.color = "#344d4f";
@@ -90,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.body.appendChild(popup);
 
-  // Hide the popup when we click on the screen.
+  // Hide the popup when click on the screen.
   document.addEventListener(
     "mousedown",
     function (e) {
@@ -103,11 +114,26 @@ document.addEventListener("DOMContentLoaded", function () {
     // Event for mobile browser
     document.addEventListener("contextmenu", function (e) {
       selectedText = getSelectedText();
-      if (selectedText.length > 0) {
+      let x = e.clientX;
+      let y = e.clientY;
+      if (isValidWord(selectedText)) {
         // Show the popup with the selected text
-        popup.style.left = e.pageX - 60 + "px";
-        popup.style.top = e.pageY + 33 + "px";
+        if (x < screenWidth * 0.3) {
+          popup.style.left = e.pageX - 10 + "px";
+        } else if (x > screenWidth * 0.7) {
+          popup.style.left = e.pageX - 120 + "px";
+        } else {
+          popup.style.left = e.pageX - 60 + "px";
+        }
+        if (y < screenHeight * 0.1) {
+          popup.style.top = e.pageY - 40 + "px";
+        } else {
+          popup.style.top = e.pageY + 33 + "px";
+        }
         popup.style.visibility = "visible";
+        setTimeout(function () {
+          popup.style.visibility = "hidden";
+        }, duration);
       } else {
         popup.style.visibility = "hidden";
       }
@@ -118,14 +144,21 @@ document.addEventListener("DOMContentLoaded", function () {
       "mouseup",
       function (e) {
         selectedText = window.getSelection().toString();
-        if (selectedText.length > 0) {
+        if (isValidWord(selectedText)) {
           // Show the popup with the selected text
           popup.style.left = e.pageX - 120 + "px";
           popup.style.top = e.pageY + 15 + "px";
           popup.style.visibility = "visible";
+          setTimeout(function () {
+            popup.style.visibility = "hidden";
+          }, duration);
         }
       },
       false
     );
+
+    document.addEventListener("keydown", function (e) {
+      popup.style.visibility = "hidden";
+    });
   }
 });
